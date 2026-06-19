@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>CGPA Final Marks Calculator</title>
+
+    <style>
+        body {
+
+            font-family: 'Segoe UI', sans-serif;
+            background:
+                linear-gradient(135deg,
+                    #031b09,
+                    #0b5d1e);
+
+            min-height: 100vh;
+            padding: 40px;
+            color: #1a1a1a;
+        }
+
+
+        .card {
+
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+        }
+
+        .header {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+            border-bottom: 2px solid #EAF7EC;
+            padding-bottom: 20px;
+        }
+
+
+        .header img {
+
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+            color: #0B5D1E;
+            font-size: 32px;
+        }
+
+
+        .subtitle {
+
+            margin-top: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+
+
+        .best3-box {
+
+            background: #EAF7EC;
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: 1px solid #cfe7d3;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .best3-label {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+            color: #0B5D1E;
+            cursor: pointer;
+        }
+
+        .best3-label input {
+
+            width: 18px;
+            height: 18px;
+            accent-color: #0B5D1E;
+        }
+
+        .best3-box small {
+
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        h2,
+        h3 {
+            margin-top: 20px;
+        }
+
+        input,
+        select {
+
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #dfe5df;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: .25s;
+            background: #fafafa;
+        }
+
+
+        input:focus,
+        select:focus {
+
+            outline: none;
+            border-color: #0B5D1E;
+            box-shadow: 0 0 0 4px rgba(11, 93, 30, .12);
+            background: white;
+        }
+
+        button {
+
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: #0B5D1E;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+
+        button:hover {
+
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(11, 93, 30, .35);
+            background: #0a4d19;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .row input {
+            flex: 1;
+        }
+
+        .result {
+
+            background: #F5FFF6;
+            border-left: 6px solid #0B5D1E;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+        }
+
+
+        .result h3 {
+
+            color: #0B5D1E;
+            font-size: 24px;
+        }
+
+        .incourse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .incourse-header h3 {
+            margin: 0;
+            color: #0B5D1E;
+            font-size: 24px;
+        }
+
+        .switch-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .switch-wrapper span {
+            font-weight: bold;
+            font-size: 18px;
+            color: #666;
+            transition: .3s;
+        }
+
+        .switch-wrapper .active {
+            color: #0B5D1E;
+        }
+
+        .switch {
+            position: relative;
+            width: 55px;
+            height: 28px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            background: #ccc;
+            border-radius: 34px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: .3s;
+        }
+
+        .switch input:checked+.slider {
+            background: #4CAF50;
+        }
+
+        .switch input:checked+.slider::before {
+            transform: translateX(27px);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7fff1;
+            border-left: 6px solid #4CAF50;
+            border-radius: 12px;
+            font-size: 17px;
+        }
+
+        .result h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .result p {
+            margin: 10px 0;
+        }
+
+        .result hr {
+            border: none;
+            border-top: 1px solid #bbb;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="header">
+            <img src="images/logo.png" alt="University Logo">
+
+            <div>
+                <h1>CGPA Final Marks Calculator</h1>
+
+                <p class="subtitle">
+                    Final Examination Marks Requirement Calculator
+                </p>
+            </div>
+
+            <div class="best3-box">
+
+                <label class="best3-label">
+
+                    <input type="checkbox" id="best3">
+
+                    <span>Best 3 of 4 CTs</span>
+
+                </label>
+
+                <small>Lowest CT will be ignored</small>
+
+            </div>
+        </div>
+
+        <div class="toggle-container">
+            <div class="incourse-header">
+                <h3>Total Incourse Marks</h3>
+
+                <div class="switch-wrapper">
+                    <span id="label50" class="active">50</span>
+
+                    <label class="switch">
+                        <input type="checkbox" id="incourseToggle">
+                        <span class="slider"></span>
+                    </label>
+
+                    <span id="label60">60</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>Class Tests</h3>
+
+        <div class="row">
+            <input type="number" id="ct1" min="0" placeholder="CT1 Obtained">
+            <input type="number" id="ct1fm" min="1" value="10" placeholder="CT1 Full Marks">
+        </div>
+
+        <div class="row">
+            <input type="number" id="ct2" min="0" placeholder="CT2 Obtained">
+            <input type="number" id="ct2fm" min="1" value="10" placeholder="CT2 Full Marks">
+        </div>
+
+        <div class="row">
+            <input type="number" id="ct3" min="0" placeholder="CT3 Obtained">
+            <input type="number" id="ct3fm" min="1" value="10" placeholder="CT3 Full Marks">
+        </div>
+
+        <div class="row">
+            <input type="number" id="ct4" min="0" placeholder="CT4 Obtained">
+            <input type="number" id="ct4fm" min="1" value="10" placeholder="CT4 Full Marks">
+        </div>
+
+        <h3>Mid Term</h3>
+
+        <div class="row">
+            <input type="number" id="mid" min="0" placeholder="Mid Obtained">
+            <input type="number" id="midfm" min="1" value="20" placeholder="Out of">
+        </div>
+
+
+        <h3>Others</h3>
+
+        <div class="row">
+            <input type="number" id="attendance" min="0" placeholder="Attendance Obtained">
+            <input type="number" id="attendancefm" min="1" value="10" placeholder="Out of">
+        </div>
+
+        <div class="row">
+            <input type="number" id="assignment" min="0" placeholder="Assignment / Term Paper Obtained">
+            <input type="number" id="assignmentfm" min="1" value="10" placeholder="Out of">
+        </div>
+
+        <div class="row">
+            <input type="number" id="participation" min="0" placeholder="Class Participation Obtained">
+            <input type="number" id="participationfm" min="1" value="10" placeholder="Out of">
+        </div>
+
+        <h3>Target Grade</h3>
+
+        <select id="cgpa">
+
+            <option value="80">4.00 (A+)</option>
+            <option value="75">3.75 (A)</option>
+            <option value="70">3.50 (A-)</option>
+            <option value="65">3.25 (B+)</option>
+            <option value="60">3.00 (B)</option>
+            <option value="55">2.75 (B-)</option>
+            <option value="50">2.50 (C+)</option>
+            <option value="45">2.25 (C)</option>
+            <option value="40">2.00 (D)</option>
+
+        </select>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div class="result" id="result"></div>
+
+    </div>
+
+    <script>
+        document.querySelectorAll("input[id$='fm']").forEach(fm => {
+
+            const baseId = fm.id.replace("fm", "");
+
+            const obtained = document.getElementById(baseId);
+
+            if (!obtained) return;
+
+            function update() {
+
+                obtained.max = fm.value;
+
+                if (+obtained.value > +fm.value) {
+                    obtained.value = fm.value;
+                }
+            }
+
+            update();
+
+            fm.addEventListener("input", update);
+
+            obtained.addEventListener("input", () => {
+
+                if (+obtained.value > +obtained.max) {
+                    obtained.value = obtained.max;
+                }
+
+            });
+
+        });
+        function val(id) {
+
+            let x = parseFloat(document.getElementById(id).value);
+
+            if (isNaN(x) || x < 0)
+                return 0;
+
+            return x;
+        }
+        function convert(obtainedId, totalId, convertedTo) {
+
+            let obtained = val(obtainedId);
+
+            let total = val(totalId);
+
+            if (total <= 0)
+                return 0;
+
+            return (obtained / total) * convertedTo;
+        }
+
+        function calculate() {
+
+            let toggle = document.getElementById("incourseToggle");
+
+            let incourse = toggle.checked ? 60 : 50;
+
+            let finalMarks = 100 - incourse;
+
+
+            let ctMarks = [
+
+                convert("ct1", "ct1fm", 10),
+
+                convert("ct2", "ct2fm", 10),
+
+                convert("ct3", "ct3fm", 10),
+
+                convert("ct4", "ct4fm", 10)
+
+            ];
+
+
+            let displayedCT = [...ctMarks];
+
+            if (document.getElementById("best3").checked) {
+
+                ctMarks.sort((a, b) => b - a);
+
+                ctMarks.pop();
+
+            }
+
+
+            let ctTotal;
+
+            if (document.getElementById("best3").checked) {
+
+                ctMarks.sort((a, b) => b - a);
+
+                let bestThree = ctMarks.slice(0, 3);
+
+                ctTotal =
+                    bestThree.reduce((a, b) => a + b, 0) / 3;
+
+            } else {
+
+                ctTotal =
+                    ctMarks.reduce((a, b) => a + b, 0) / 4;
+            }
+
+            let mid = convert(
+                "mid",
+                "midfm",
+                20
+            );
+
+            let attendance = val("attendance");
+
+            let assignment = val("assignment");
+
+            let participation = val("participation");
+
+
+            let totalIncourse =
+
+                ctTotal +
+
+                mid +
+
+                attendance +
+
+                assignment +
+
+                participation;
+
+
+
+            let target =
+                parseFloat(
+                    document.getElementById("cgpa").value
+                );
+
+
+            let needFinal = target - totalIncourse;
+
+            if (needFinal < 0)
+                needFinal = 0;
+
+
+            let percentInFinal =
+                (needFinal / finalMarks * 100).toFixed(2);
+
+
+            let requiredInFinalOutOf100 = ((needFinal / finalMarks) * 100).toFixed(2);
+
+            document.getElementById("result").innerHTML = `
+
+<h3>Final Summary</h3>
+
+<p><b>CT Marks →</b> ${ctTotal.toFixed(2)}</p>
+
+<p><b>Mid Marks →</b> ${mid.toFixed(2)}</p>
+
+<p><b>Assignment Marks →</b> ${assignment.toFixed(2)}</p>
+
+<p><b>Attendance Marks →</b> ${attendance.toFixed(2)}</p>
+
+${incourse === 60 ? `
+<p><b>Class Participation Marks →</b> ${participation.toFixed(2)}</p>
+` : ""}
+
+<hr>
+
+<p><b>In-course Total →</b> ${totalIncourse.toFixed(2)} / ${incourse}</p>
+
+<p><b>Required Marks (for target CGPA) →</b> ${needFinal.toFixed(2)} / ${finalMarks}</p>
+
+<p><b>Required Marks in Final (out of 100) →</b> ${requiredInFinalOutOf100}</p>
+
+`;
+
+        }
+        const toggle = document.getElementById("incourseToggle");
+
+        toggle.addEventListener("change", () => {
+
+            document.getElementById("label50")
+                .classList.toggle("active", !toggle.checked);
+
+            document.getElementById("label60")
+                .classList.toggle("active", toggle.checked);
+
+        });
+    </script>
+
+</body>
+
+</html>
