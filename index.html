@@ -270,7 +270,6 @@
             margin: 15px 0;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
 
             body {
@@ -342,107 +341,186 @@
                 font-size: 16px;
             }
         }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: #eaf7ec;
+            color: #0B5D1E;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: #0B5D1E;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
+    <div class="nav-tabs">
+        <button class="tab active" onclick="showPage('theory')">
+            Theory Final
+        </button>
 
-    <div class="card">
+        <button class="tab" onclick="showPage('lab')">
+            Lab Final
+        </button>
+    </div>
+    <div id="theoryPage">
+        <div class="card">
 
-        <div class="header">
-            <img src="images/logo.png" alt="University Logo">
+            <div class="header">
+                <img src="images/logo.png" alt="University Logo">
 
-            <div>
-                <h1>CGPA Final Marks Calculator</h1>
+                <div>
+                    <h1>CGPA Final Marks Calculator</h1>
 
-                <p class="subtitle">
-                    Final Examination Marks Requirement Calculator
-                </p>
-            </div>
+                    <p class="subtitle">
+                        Final Examination Marks Requirement Calculator
+                    </p>
+                </div>
 
-            <div class="best3-box">
+                <div class="best3-box">
 
-                <label class="best3-label">
+                    <label class="best3-label">
 
-                    <input type="checkbox" id="best3">
+                        <input type="checkbox" id="best3">
 
-                    <span>Best 3 of 4 CTs</span>
+                        <span>Best 3 of 4 CTs</span>
 
-                </label>
-
-                <small>Lowest CT will be ignored</small>
-
-            </div>
-        </div>
-
-        <div class="toggle-container">
-            <div class="incourse-header">
-                <h3>Total Incourse Marks</h3>
-
-                <div class="switch-wrapper">
-                    <span id="label50" class="active">50</span>
-
-                    <label class="switch">
-                        <input type="checkbox" id="incourseToggle">
-                        <span class="slider"></span>
                     </label>
 
-                    <span id="label60">60</span>
+                    <small>Lowest CT will be ignored</small>
+
                 </div>
             </div>
-        </div>
 
-        <h3>Class Tests</h3>
+            <div class="toggle-container">
+                <div class="incourse-header">
+                    <h3>Total Incourse Marks</h3>
+
+                    <div class="switch-wrapper">
+                        <span id="label50" class="active">50</span>
+
+                        <label class="switch">
+                            <input type="checkbox" id="incourseToggle">
+                            <span class="slider"></span>
+                        </label>
+
+                        <span id="label60">60</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Class Tests</h3>
+
+            <div class="row">
+                <input type="number" id="ct1" min="0" placeholder="CT1 Obtained">
+                <input type="number" id="ct1fm" min="1" value="10" placeholder="CT1 Full Marks">
+            </div>
+
+            <div class="row">
+                <input type="number" id="ct2" min="0" placeholder="CT2 Obtained">
+                <input type="number" id="ct2fm" min="1" value="10" placeholder="CT2 Full Marks">
+            </div>
+
+            <div class="row">
+                <input type="number" id="ct3" min="0" placeholder="CT3 Obtained">
+                <input type="number" id="ct3fm" min="1" value="10" placeholder="CT3 Full Marks">
+            </div>
+
+            <div class="row">
+                <input type="number" id="ct4" min="0" placeholder="CT4 Obtained">
+                <input type="number" id="ct4fm" min="1" value="10" placeholder="CT4 Full Marks">
+            </div>
+
+            <h3>Mid Term</h3>
+
+            <div class="row">
+                <input type="number" id="mid" min="0" placeholder="Mid Obtained">
+                <input type="number" id="midfm" min="1" value="20" placeholder="Out of">
+            </div>
+
+
+            <h3>Others</h3>
+
+            <div class="row">
+                <input type="number" id="attendance" min="0" placeholder="Attendance Obtained">
+                <input type="number" id="attendancefm" min="1" value="10" placeholder="Out of">
+            </div>
+
+            <div class="row">
+                <input type="number" id="assignment" min="0" placeholder="Assignment / Term Paper Obtained">
+                <input type="number" id="assignmentfm" min="1" value="10" placeholder="Out of">
+            </div>
+
+            <div id="participationBox" class="row" style="display:none;">
+                <input type="number" id="participation" min="0" placeholder="Class Participation Obtained">
+                <input type="number" id="participationfm" min="1" value="10" placeholder="Out of">
+            </div>
+
+            <h3>Target Grade</h3>
+
+            <select id="cgpa">
+
+                <option value="80">4.00 (A+)</option>
+                <option value="75">3.75 (A)</option>
+                <option value="70">3.50 (A-)</option>
+                <option value="65">3.25 (B+)</option>
+                <option value="60">3.00 (B)</option>
+                <option value="55">2.75 (B-)</option>
+                <option value="50">2.50 (C+)</option>
+                <option value="45">2.25 (C)</option>
+                <option value="40">2.00 (D)</option>
+
+            </select>
+
+            <button onclick="calculate()">Calculate</button>
+
+            <div class="result" id="result"></div>
+
+        </div>
+    </div>
+    <div id="labPage" style="display:none">
+
+        <h2>Lab Final Calculator</h2>
 
         <div class="row">
-            <input type="number" id="ct1" min="0" placeholder="CT1 Obtained">
-            <input type="number" id="ct1fm" min="1" value="10" placeholder="CT1 Full Marks">
+            <input type="number" id="quiz" placeholder="Quiz Obtained">
+            <input type="number" value="20">
         </div>
 
         <div class="row">
-            <input type="number" id="ct2" min="0" placeholder="CT2 Obtained">
-            <input type="number" id="ct2fm" min="1" value="10" placeholder="CT2 Full Marks">
+            <input type="number" id="attendanceLab" placeholder="Attendance Obtained">
+            <input type="number" value="10">
         </div>
 
         <div class="row">
-            <input type="number" id="ct3" min="0" placeholder="CT3 Obtained">
-            <input type="number" id="ct3fm" min="1" value="10" placeholder="CT3 Full Marks">
+            <input type="number" id="report" placeholder="Lab Report Obtained">
+            <input type="number" value="10">
         </div>
 
         <div class="row">
-            <input type="number" id="ct4" min="0" placeholder="CT4 Obtained">
-            <input type="number" id="ct4fm" min="1" value="10" placeholder="CT4 Full Marks">
-        </div>
-
-        <h3>Mid Term</h3>
-
-        <div class="row">
-            <input type="number" id="mid" min="0" placeholder="Mid Obtained">
-            <input type="number" id="midfm" min="1" value="20" placeholder="Out of">
-        </div>
-
-
-        <h3>Others</h3>
-
-        <div class="row">
-            <input type="number" id="attendance" min="0" placeholder="Attendance Obtained">
-            <input type="number" id="attendancefm" min="1" value="10" placeholder="Out of">
+            <input type="number" id="performance" placeholder="Class Performance Obtained">
+            <input type="number" value="10">
         </div>
 
         <div class="row">
-            <input type="number" id="assignment" min="0" placeholder="Assignment / Term Paper Obtained">
-            <input type="number" id="assignmentfm" min="1" value="10" placeholder="Out of">
+            <input type="number" id="viva" placeholder="Viva Obtained">
+            <input type="number" value="10">
         </div>
 
-        <div class="row">
-            <input type="number" id="participation" min="0" placeholder="Class Participation Obtained">
-            <input type="number" id="participationfm" min="1" value="10" placeholder="Out of">
-        </div>
-
-        <h3>Target Grade</h3>
-
-        <select id="cgpa">
-
+        <select id="labCgpa">
             <option value="80">4.00 (A+)</option>
             <option value="75">3.75 (A)</option>
             <option value="70">3.50 (A-)</option>
@@ -452,15 +530,15 @@
             <option value="50">2.50 (C+)</option>
             <option value="45">2.25 (C)</option>
             <option value="40">2.00 (D)</option>
-
         </select>
 
-        <button onclick="calculate()">Calculate</button>
+        <button onclick="calculateLab()">
+            Calculate
+        </button>
 
-        <div class="result" id="result"></div>
+        <div id="labResult" class="result"></div>
 
     </div>
-
     <script>
         document.querySelectorAll("input[id$='fm']").forEach(fm => {
 
@@ -581,11 +659,9 @@
                 10
             );
 
-            let participation = convert(
-                "participation",
-                "participationfm",
-                10
-            );
+            let participation = incourse === 60
+                ? convert("participation", "participationfm", 10)
+                : 0;
 
 
             let totalIncourse =
@@ -648,8 +724,9 @@ ${incourse === 60 ? `
 
         }
         const toggle = document.getElementById("incourseToggle");
+        const participationBox = document.getElementById("participationBox");
 
-        toggle.addEventListener("change", () => {
+        function updateIncourseUI() {
 
             document.getElementById("label50")
                 .classList.toggle("active", !toggle.checked);
@@ -657,9 +734,31 @@ ${incourse === 60 ? `
             document.getElementById("label60")
                 .classList.toggle("active", toggle.checked);
 
-        });
-    </script>
+            participationBox.style.display = toggle.checked ? "flex" : "none";
+        }
 
+        toggle.addEventListener("change", updateIncourseUI);
+        updateIncourseUI();
+        function showPage(page) {
+
+            document.getElementById("theoryPage").style.display =
+                page === "theory" ? "block" : "none";
+
+            document.getElementById("labPage").style.display =
+                page === "lab" ? "block" : "none";
+
+
+            document.querySelectorAll(".tab")
+                .forEach(btn => btn.classList.remove("active"));
+
+            if (page === "theory")
+                document.querySelectorAll(".tab")[0]
+                    .classList.add("active");
+            else
+                document.querySelectorAll(".tab")[1]
+                    .classList.add("active");
+        }
+    </script>
 </body>
 
 </html>
