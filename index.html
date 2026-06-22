@@ -758,6 +758,41 @@ ${incourse === 60 ? `
                 document.querySelectorAll(".tab")[1]
                     .classList.add("active");
         }
+        function calculateLab() {
+
+            let quiz = +document.getElementById("quiz").value || 0;
+
+            let attendance = +document.getElementById("attendanceLab").value || 0;
+
+            let report = +document.getElementById("report").value || 0;
+
+            let performance = +document.getElementById("performance").value || 0;
+
+            let viva = +document.getElementById("viva").value || 0;
+
+            let total =
+                quiz +
+                attendance +
+                report +
+                performance +
+                viva;
+
+            let target =
+                +document.getElementById("labCgpa").value;
+
+            let needFinal =
+                Math.max(0, target - total);
+
+            document.getElementById("labResult").innerHTML = `
+
+        <h3>Lab Final Summary</h3>
+
+        <p><b>In-course Total:</b> ${total}/60</p>
+
+        <p><b>Required in Lab Final:</b> ${needFinal}/40</p>
+
+    `;
+        }
     </script>
 </body>
 
